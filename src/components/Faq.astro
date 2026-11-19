@@ -1,0 +1,136 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const faq = [
+  {
+    q: 'Benarkah semuanya gratis?',
+    a: 'Ya. Biaya pendidikan, uang makan, uang gedung, asrama, serta seragam dan sepatu tidak dibebankan kepada wali santri. Operasional pesantren ditopang infak para donatur.',
+  },
+  {
+    q: 'Siapa yang boleh mendaftar?',
+    a: `Anak laki-laki berstatus yatim piatu, yatim, atau dhuafa, yang lulus SD tahun ${site.tahunLulusSD} dan akan masuk kelas 1 SMP pada tahun ajaran ${site.tahunAjaran}, dengan usia maksimal 13 tahun pada ${site.batasUsia}.`,
+  },
+  {
+    q: 'Apakah menerima santri putri?',
+    a: 'Untuk saat ini pesantren khusus menerima santri ikhwan (putra).',
+  },
+  {
+    q: 'Bagaimana proses seleksinya?',
+    a: 'Setelah mengisi formulir pendaftaran, calon santri mengikuti ujian saringan masuk secara daring (online), beberapa hari setelah mendaftar.',
+  },
+  {
+    q: 'Apakah ijazahnya diakui?',
+    a: 'Santri mendapatkan ijazah resmi dari pemerintah setingkat SMP, sekaligus ijazah pesantren.',
+  },
+  {
+    q: 'Kapan pendaftaran dibuka?',
+    a: `Jadwal pendaftaran tahun ajaran ${site.tahunAjaran} akan diumumkan melalui Instagram @${site.instagram.handle} dan WhatsApp ${site.wa.display}. Pada tahun sebelumnya, pendaftaran ditutup ketika kuota terpenuhi, jadi siapkan berkas sejak awal.`,
+  },
+];
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <div class="container faq__grid">
+    <div>
+      <p class="eyebrow">Tanya jawab</p>
+      <h2 class="h2" id="faq-title">Yang sering ditanyakan wali.</h2>
+      <p class="lead faq__lead">
+        Belum terjawab? Tanyakan langsung ke admin pesantren di{' '}
+        <a href={`https://wa.me/${site.wa.number}`} target="_blank" rel="noopener">{site.wa.display}</a>.
+      </p>
+    </div>
+
+    <div class="faq__list">
+      {
+        faq.map((f, i) => (
+          <details name="faq" open={i === 0}>
+            <summary>
+              <span>{f.q}</span>
+              <span class="faq__icon" aria-hidden="true">
+                <Icon name="plus" size={20} />
+              </span>
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .faq__lead {
+    margin-top: 18px;
+  }
+
+  .faq__lead a {
+    color: var(--navy-2);
+    font-weight: 700;
+    text-underline-offset: 3px;
+  }
+
+  details {
+    border-top: 1px solid var(--line-strong);
+  }
+
+  details:last-child {
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    transition:
+      transform 0.25s,
+      background-color 0.25s;
+  }
+
+  details[open] .faq__icon {
+    transform: rotate(45deg);
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  details p {
+    padding: 0 52px 24px 0;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 860px) {
+    .faq__grid {
+      grid-template-columns: 1fr;
+    }
+    details p {
+      padding-right: 0;
+    }
+  }
+</style>

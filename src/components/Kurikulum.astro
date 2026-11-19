@@ -1,0 +1,260 @@
+---
+import Icon from './Icon.astro';
+import { igUrl, videos } from '../data/site';
+
+const items = [
+  {
+    no: '01',
+    ar: 'تحفيظ القرآن',
+    title: "Tahfidz Al-Qur'an",
+    text: "Program inti pesantren. Santri menghafal Al-Qur'an dengan bimbingan pengajar lulusan pesantren tahfidz.",
+    core: true,
+  },
+  {
+    no: '02',
+    ar: 'الأربعين النووية',
+    title: 'Hafalan Hadis Arbain',
+    text: 'Bekal untuk meluruskan akidah, membentuk akhlak, dan mengamalkan ajaran Islam sehari-hari.',
+  },
+  {
+    no: '03',
+    ar: 'تحفة الأطفال',
+    title: 'Matan Tuhfatul Athfal',
+    text: 'Kaidah tajwid, supaya bacaan dan hafalan berdiri di atas dasar yang benar.',
+  },
+  {
+    no: '04',
+    ar: 'الآجرومية',
+    title: 'Matan Al-Ajurumiyyah',
+    text: 'Dasar ilmu nahwu, pintu untuk membaca dan memahami kitab berbahasa Arab.',
+  },
+  {
+    no: '05',
+    ar: '',
+    title: 'Pendidikan formal setingkat SMP',
+    text: 'Pelajaran umum berjalan beriringan, dengan ijazah resmi pemerintah dan pesantren.',
+  },
+];
+
+const kabar = videos.find((v) => v.id === 'DeuC7pUTRaU')!;
+---
+
+<section class="section kur" id="kurikulum" aria-labelledby="kur-title">
+  <div class="container kur__grid">
+    <div class="kur__intro">
+      <p class="eyebrow">Kurikulum</p>
+      <h2 class="h2" id="kur-title">Al-Qur'an sebagai inti, ilmu alat sebagai penopang.</h2>
+      <p class="lead">
+        Selain hafalan Al-Qur'an, santri juga menghafal matan ilmu, bertahap dari kelas ke kelas.
+      </p>
+
+      <a class="news" href={igUrl(kabar)} target="_blank" rel="noopener" data-reveal>
+        <span class="news__tag">Kabar pekan ini</span>
+        <p>
+          Santri <strong>kelas 7</strong> telah sampai hadis ke-21 Arbain. Santri <strong>kelas 8</strong> beranjak
+          dari Tuhfatul Athfal menuju Al-Ajurumiyyah.
+        </p>
+        <span class="news__src">
+          <Icon name="instagram" size={16} /> Dari Instagram pesantren <Icon name="external" size={14} />
+        </span>
+      </a>
+    </div>
+
+    <ol class="kur__list">
+      {
+        items.map((it, i) => (
+          <li class:list={[{ core: it.core }]} data-reveal style={`--d:${i * 0.05}s`}>
+            <span class="kur__no">{it.no}</span>
+            <div class="kur__body">
+              <div class="kur__titles">
+                <h3>{it.title}</h3>
+                {it.ar && (
+                  <span class="arabic kur__ar" lang="ar">
+                    {it.ar}
+                  </span>
+                )}
+              </div>
+              <p>{it.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .kur {
+    background: var(--paper-2);
+  }
+
+  .kur::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--pattern-ink);
+    background-size: 56px;
+    opacity: 0.035;
+    pointer-events: none;
+  }
+
+  .kur__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(40px, 7vw, 104px);
+    align-items: start;
+  }
+
+  .kur__intro {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+
+  .lead {
+    margin-top: 18px;
+  }
+
+  .news {
+    display: block;
+    margin-top: 32px;
+    padding: 22px 24px;
+    border-radius: var(--radius);
+    background: var(--card);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .news:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .news__tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stamp);
+  }
+
+  .news p {
+    margin-top: 8px;
+    color: var(--ink-2);
+  }
+
+  .news strong {
+    color: var(--ink);
+  }
+
+  .news__src {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--navy-2);
+  }
+
+  .kur__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: none;
+  }
+
+  .kur__list li {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .kur__list li:last-child {
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .kur__no {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    color: var(--gold-deep);
+    padding-top: 4px;
+  }
+
+  .kur__titles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+  }
+
+  .kur__list h3 {
+    font-size: clamp(1.375rem, 1.1rem + 0.8vw, 1.75rem);
+  }
+
+  .kur__ar {
+    font-size: 1.5rem;
+    color: var(--navy-2);
+    line-height: 1.4;
+  }
+
+  .kur__body p {
+    margin-top: 8px;
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+
+  .kur__list li.core {
+    background: var(--navy);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 30px 28px;
+    border: 0;
+    margin-bottom: 16px;
+    background-image: linear-gradient(120deg, rgb(13 37 82 / 0.96), rgb(19 51 109 / 0.9)), var(--pattern-gold);
+    background-size: auto, 56px;
+  }
+
+  .kur__list li.core + li {
+    border-top: 0;
+  }
+
+  .core .kur__no {
+    color: var(--gold-2);
+  }
+
+  .core .kur__ar {
+    color: var(--gold-2);
+    font-size: 1.75rem;
+  }
+
+  .core p {
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  @media (max-width: 900px) {
+    .kur__grid {
+      grid-template-columns: 1fr;
+    }
+    .kur__intro {
+      position: static;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .kur__list li {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .kur__list li.core {
+      padding: 24px 20px;
+    }
+  }
+</style>

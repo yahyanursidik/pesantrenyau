@@ -1,0 +1,390 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-shield.png';
+import Icon from './Icon.astro';
+import { site, WA_TANYA } from '../data/site';
+---
+
+<section class="hero" id="beranda" aria-labelledby="hero-title">
+  <div class="hero__pattern" aria-hidden="true"></div>
+
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="pill">
+        <span class="pill__dot" aria-hidden="true"></span>
+        Pendaftaran santri baru {site.tahunAjaran} · {site.status}
+      </p>
+
+      <h1 id="hero-title">
+        Menghafal Al&#8209;Qur'an,{' '}
+        <span class="swash">tanpa memikirkan biaya.</span>
+      </h1>
+
+      <p class="hero__lead">
+        Pesantren tahfidz setingkat SMP untuk anak <strong>yatim dan dhuafa</strong>, khusus ikhwan. Pendidikan,
+        makan, asrama, hingga seragam ditanggung penuh, di kaki Gunung Burangrang, Bandung Barat.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn" href={site.daftarUrl} target="_blank" rel="noopener">
+          {site.ctaLabel} <Icon name="arrow" size={18} class="i-arrow" />
+        </a>
+        <a class="btn btn--ghost-light" href={WA_TANYA} target="_blank" rel="noopener">
+          <Icon name="chat" size={18} /> Tanya via WhatsApp
+        </a>
+      </div>
+
+      <p class="hero__meta">
+        <Icon name="calendar" size={16} />
+        {site.jadwal}. Pantau WhatsApp & Instagram pesantren.
+      </p>
+    </div>
+
+    <aside class="ticket" aria-label="Ringkasan pendaftaran">
+      <div class="ticket__stamp" aria-hidden="true">
+        <span>Gratis</span>
+        <strong>100%</strong>
+      </div>
+
+      <div class="ticket__head">
+        <span class="ticket__logo">
+          <Image src={logo} alt="Logo Pesantren Abu Ubaidah bin Al Jarrah" width={64} densities={[1, 2]} />
+        </span>
+        <div>
+          <p class="ticket__kicker">Kartu pendaftaran</p>
+          <p class="ticket__year">TA {site.tahunAjaran}</p>
+        </div>
+      </div>
+
+      <p class="ticket__arabic arabic" lang="ar">{site.arabic}</p>
+
+      <dl class="ticket__rows">
+        <div>
+          <dt>Jenjang</dt>
+          <dd>Setingkat SMP, masuk kelas 7</dd>
+        </div>
+        <div>
+          <dt>Peserta</dt>
+          <dd>Ikhwan · yatim, piatu, dhuafa</dd>
+        </div>
+        <div>
+          <dt>Usia</dt>
+          <dd>Maks. 13 tahun ({site.batasUsia})</dd>
+        </div>
+        <div>
+          <dt>Seleksi</dt>
+          <dd>Ujian saringan secara daring</dd>
+        </div>
+      </dl>
+
+      <div class="ticket__tear" aria-hidden="true"></div>
+
+      <div class="ticket__foot">
+        <span class="ticket__badge">{site.status}</span>
+        <span>Kuota terbatas</span>
+      </div>
+    </aside>
+  </div>
+
+  <svg class="hero__ridge" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      d="M0 92 L120 70 L230 84 L360 40 L470 72 L590 30 L700 64 L820 18 L930 58 L1060 36 L1180 70 L1300 48 L1440 76 V140 H0Z"
+      fill="#1a3a78"></path>
+    <path
+      d="M0 112 L150 92 L300 108 L460 78 L620 104 L780 86 L940 110 L1100 88 L1260 106 L1440 92 V140 H0Z"
+      fill="var(--paper)"></path>
+  </svg>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background:
+      radial-gradient(1200px 520px at 85% -10%, rgb(31 86 179 / 0.55), transparent 60%),
+      radial-gradient(700px 400px at -10% 110%, rgb(233 162 59 / 0.18), transparent 60%),
+      var(--navy);
+    color: #fff;
+    padding-top: calc(var(--header-h) + clamp(40px, 7vw, 88px));
+    padding-bottom: clamp(120px, 14vw, 180px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__pattern {
+    position: absolute;
+    inset: 0;
+    background-image: var(--pattern-gold);
+    background-size: 56px;
+    opacity: 0.09;
+    mask-image: radial-gradient(ellipse 80% 70% at 75% 30%, #000 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 75% 30%, #000 20%, transparent 75%);
+    z-index: -1;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+    gap: clamp(40px, 6vw, 88px);
+    align-items: center;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 12px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pill__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 0 rgb(233 162 59 / 0.7);
+    animation: pulse 2.2s infinite;
+  }
+
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 10px rgb(233 162 59 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(233 162 59 / 0);
+    }
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 1.3rem + 4vw, 4.25rem);
+    line-height: 1.04;
+    margin-top: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .swash {
+    color: var(--gold-2);
+    background: linear-gradient(rgb(233 162 59 / 0.55), rgb(233 162 59 / 0.55)) 0 94% / 100% 0.1em no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .hero__lead {
+    margin-top: 24px;
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    color: rgb(255 255 255 / 0.8);
+    max-width: 54ch;
+  }
+
+  .hero__lead strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .hero__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 0.9375rem;
+    color: rgb(255 255 255 / 0.66);
+  }
+
+  /* Kartu pendaftaran */
+  .ticket {
+    position: relative;
+    background: var(--card);
+    color: var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 22px;
+    box-shadow: var(--shadow-lg);
+    transform: rotate(1.2deg);
+    background-image: linear-gradient(rgb(255 253 248 / 0.94), rgb(255 253 248 / 0.94)), var(--pattern-ink);
+    background-size: auto, 56px;
+  }
+
+  .ticket__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-right: 72px;
+  }
+
+  .ticket__logo {
+    flex: none;
+    width: 64px;
+  }
+
+  .ticket__logo :global(img) {
+    width: 64px;
+    height: auto;
+  }
+
+  .ticket__kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+
+  .ticket__year {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .ticket__arabic {
+    margin: 18px 0 6px;
+    font-size: clamp(2.2rem, 1.6rem + 2vw, 2.9rem);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--navy-2);
+  }
+
+  .ticket__rows {
+    margin: 0;
+    display: grid;
+  }
+
+  .ticket__rows div {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 12px;
+    padding: 11px 0;
+    border-top: 1px dashed var(--line-strong);
+    font-size: 0.9375rem;
+  }
+
+  .ticket__rows dt {
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+
+  .ticket__rows dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ticket__tear {
+    position: relative;
+    height: 22px;
+    margin: 6px -28px 0;
+    background: radial-gradient(circle at 0 50%, var(--navy) 11px, transparent 12px) left / 50% 100% no-repeat,
+      radial-gradient(circle at 100% 50%, var(--navy) 11px, transparent 12px) right / 50% 100% no-repeat;
+  }
+
+  .ticket__tear::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 50%;
+    border-top: 2px dashed var(--line-strong);
+  }
+
+  .ticket__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+
+  .ticket__badge {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .ticket__stamp {
+    position: absolute;
+    top: -26px;
+    right: -18px;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    border: 3px solid var(--stamp);
+    outline: 1.5px solid var(--stamp);
+    outline-offset: -9px;
+    color: var(--stamp);
+    background: rgb(255 253 248 / 0.94);
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1;
+    transform: rotate(-14deg);
+    box-shadow: 0 6px 16px -6px rgb(0 0 0 / 0.35);
+  }
+
+  .ticket__stamp span {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .ticket__stamp strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.75rem;
+    margin-top: 4px;
+  }
+
+  .hero__ridge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    width: 100%;
+    height: clamp(70px, 9vw, 140px);
+  }
+
+  @media (max-width: 1080px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+    .ticket {
+      max-width: 460px;
+      transform: rotate(0.8deg);
+      margin-right: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__actions .btn {
+      flex: 1 1 100%;
+    }
+    .ticket {
+      padding: 24px 20px 18px;
+    }
+    .ticket__tear {
+      margin-inline: -20px;
+    }
+    .ticket__stamp {
+      width: 86px;
+      height: 86px;
+      top: -22px;
+      right: -12px;
+    }
+    .ticket__stamp strong {
+      font-size: 1.4rem;
+    }
+  }
+</style>

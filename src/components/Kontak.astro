@@ -1,0 +1,257 @@
+---
+import { Image } from 'astro:assets';
+import yau from '../assets/yau.png';
+import Icon from './Icon.astro';
+import { site, WA_TANYA } from '../data/site';
+---
+
+<section class="section kontak" id="kontak" aria-labelledby="kontak-title">
+  <div class="container">
+    <div class="kontak__grid">
+      <div class="kontak__card kontak__map" data-reveal>
+        <svg class="kontak__ridge" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 120V78L60 56l40 14 70-48 60 34 50-26 60 30 60-18v78z" fill="rgb(255 255 255 / .08)"></path>
+          <path d="M0 120V96l80-18 70 16 90-30 80 22 80-12v66z" fill="rgb(255 255 255 / .1)"></path>
+        </svg>
+        <p class="eyebrow eyebrow--light">Lokasi pondok</p>
+        <h2 class="h2" id="kontak-title">Berkunjung ke pondok</h2>
+        <address>
+          <Icon name="pin" size={22} />
+          <span>
+            {site.alamat.jalan}, {site.alamat.desa},<br />
+            {site.alamat.kecamatan}, {site.alamat.kabupaten}, {site.alamat.provinsi}
+          </span>
+        </address>
+        <p class="kontak__note">Di bawah kaki Gunung Burangrang. Udaranya sejuk, suasananya tenang untuk menghafal.</p>
+        <a class="btn" href={site.lokasiUrl} target="_blank" rel="noopener">
+          Buka petunjuk arah <Icon name="arrow" size={18} class="i-arrow" />
+        </a>
+      </div>
+
+      <div class="kontak__side">
+        <ul class="channels">
+          <li data-reveal>
+            <a href={WA_TANYA} target="_blank" rel="noopener">
+              <span class="channels__icon channels__icon--wa"><Icon name="chat" size={22} /></span>
+              <span>
+                <small>WhatsApp / informasi</small>
+                <strong>{site.wa.display}</strong>
+              </span>
+              <Icon name="arrow" size={18} class="channels__go" />
+            </a>
+          </li>
+          <li data-reveal style="--d:.06s">
+            <a href={site.instagram.url} target="_blank" rel="noopener">
+              <span class="channels__icon channels__icon--ig"><Icon name="instagram" size={22} /></span>
+              <span>
+                <small>Instagram</small>
+                <strong>@{site.instagram.handle}</strong>
+              </span>
+              <Icon name="arrow" size={18} class="channels__go" />
+            </a>
+          </li>
+        </ul>
+
+        <div class="people" data-reveal style="--d:.12s">
+          <div>
+            <small>Pembina</small>
+            <strong>{site.pembina}</strong>
+          </div>
+          <div>
+            <small>Mudir</small>
+            <strong>{site.mudir}</strong>
+          </div>
+          <a class="people__yau" href={site.yauUrl} target="_blank" rel="noopener">
+            <small>Member of</small>
+            <Image src={yau} alt="Yusuf Abu Ubaidah (YAU)" width={130} densities={[1, 2]} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kontak {
+    padding-top: 0;
+  }
+
+  .kontak__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 16px;
+  }
+
+  .kontak__card {
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 4vw, 48px);
+  }
+
+  .kontak__map {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(600px 300px at 100% 0%, rgb(31 86 179 / 0.55), transparent 60%),
+      var(--navy);
+    color: #fff;
+    padding-bottom: clamp(64px, 8vw, 96px);
+  }
+
+  .kontak__ridge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 45%;
+    z-index: -1;
+  }
+
+  .eyebrow--light {
+    color: var(--gold-2);
+  }
+
+  address {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    font-style: normal;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  address :global(svg) {
+    flex: none;
+    color: var(--gold-2);
+    margin-top: 2px;
+  }
+
+  .kontak__note {
+    margin: 14px 0 28px;
+    color: rgb(255 255 255 / 0.72);
+    max-width: 46ch;
+  }
+
+  .kontak__side {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+
+  .channels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  .channels a {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 22px;
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .channels a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .channels a > span:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin-right: auto;
+  }
+
+  .channels small,
+  .people small {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+
+  .channels strong {
+    font-size: 1.125rem;
+    overflow-wrap: anywhere;
+  }
+
+  .channels__icon {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+  }
+
+  .channels__icon--wa {
+    background: var(--wa);
+  }
+
+  .channels__icon--ig {
+    background: linear-gradient(135deg, #f58529, #dd2a7b 50%, #8134af);
+  }
+
+  .channels a :global(.channels__go) {
+    flex: none;
+    color: var(--ink-3);
+    transition: transform 0.2s;
+  }
+
+  .channels a:hover :global(.channels__go) {
+    transform: translateX(3px);
+    color: var(--ink);
+  }
+
+  .people {
+    display: grid;
+    gap: 18px;
+    padding: 24px 22px;
+    border-radius: var(--radius-lg);
+    background: var(--paper-2);
+  }
+
+  .people div,
+  .people__yau {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .people strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  .people__yau {
+    padding-top: 18px;
+    border-top: 1px solid var(--line-strong);
+    text-decoration: none;
+    gap: 8px;
+  }
+
+  .people__yau :global(img) {
+    width: 130px;
+    height: auto;
+    mix-blend-mode: multiply;
+  }
+
+  @media (max-width: 900px) {
+    .kontak__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Biaya from '../components/Biaya.astro';
+import Kurikulum from '../components/Kurikulum.astro';
+import Kegiatan from '../components/Kegiatan.astro';
+import Pendaftaran from '../components/Pendaftaran.astro';
+import Donasi from '../components/Donasi.astro';
+import Faq from '../components/Faq.astro';
+import Kontak from '../components/Kontak.astro';
+import Footer from '../components/Footer.astro';
+import MobileCta from '../components/MobileCta.astro';
+import { site } from '../data/site';
+---
+
+<Layout
+  title={`Pendaftaran Santri Baru ${site.tahunAjaran} · Pesantren Gratis Tahfidz Qur'an Abu Ubaidah bin Al Jarrah`}
+  description={`Pesantren gratis tahfidz Al-Qur'an setingkat SMP khusus ikhwan yatim & dhuafa di Cisarua, Bandung Barat. Pendidikan, makan, asrama, seragam 100% gratis. Pendaftaran santri baru ${site.tahunAjaran} segera dibuka.`}
+>
+  <Header />
+  <main id="konten">
+    <Hero />
+    <Biaya />
+    <Kurikulum />
+    <Kegiatan />
+    <Pendaftaran />
+    <Donasi />
+    <Faq />
+    <Kontak />
+  </main>
+  <Footer />
+  <MobileCta />
+</Layout>

@@ -1,0 +1,289 @@
+---
+import Icon from './Icon.astro';
+import { site, syarat, WA_TANYA } from '../data/site';
+
+const langkah = [
+  {
+    title: 'Isi formulir online',
+    text: 'Baca syarat lengkap dan isi formulir pendaftaran melalui tautan resmi.',
+    link: { href: site.daftarUrl, label: 'bagi.to/daftarpesantrengratis' },
+  },
+  {
+    title: 'Ikuti ujian saringan daring',
+    text: 'Ujian saringan masuk dilaksanakan secara online, beberapa hari setelah pendaftaran.',
+  },
+  {
+    title: 'Pantau informasi lanjutan',
+    text: `Kabar seleksi disampaikan pihak pesantren. Ada pertanyaan? Hubungi ${site.wa.display}.`,
+  },
+];
+---
+
+<section class="section daftar" id="pendaftaran" aria-labelledby="daftar-title">
+  <div class="container">
+    <div class="daftar__head">
+      <p class="eyebrow">Pendaftaran {site.tahunAjaran}</p>
+      <h2 class="h2" id="daftar-title">Syarat & langkah mendaftar</h2>
+      <p class="daftar__window">
+        <Icon name="calendar" size={18} />
+        <span><strong>{site.status}:</strong> {site.jadwal.toLowerCase()} melalui WhatsApp & Instagram.</span>
+      </p>
+    </div>
+
+    <div class="daftar__grid">
+      <div class="panel" data-reveal>
+        <h3>Syarat calon santri</h3>
+        <ul class="syarat">
+          {
+            syarat.map((s) => (
+              <li>
+                <span class="syarat__check">
+                  <Icon name="check" size={18} />
+                </span>
+                <div>
+                  <strong>{s.title}</strong>
+                  <span>{s.note}</span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="panel panel--steps" data-reveal style="--d:.08s">
+        <h3>Alur pendaftaran</h3>
+        <ol class="steps">
+          {
+            langkah.map((l, i) => (
+              <li>
+                <span class="steps__no">{i + 1}</span>
+                <div>
+                  <strong>{l.title}</strong>
+                  <p>{l.text}</p>
+                  {l.link && (
+                    <a href={l.link.href} target="_blank" rel="noopener">
+                      {l.link.label} <Icon name="external" size={14} />
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+
+    <div class="cta-band" data-reveal>
+      <div>
+        <p class="cta-band__title">Kuota terbatas. Siapkan dari sekarang.</p>
+        <p class="cta-band__text">
+          Kenal anak yatim atau dhuafa yang lulus SD tahun {site.tahunLulusSD}? Bagikan halaman ini kepada walinya.
+        </p>
+      </div>
+      <div class="cta-band__actions">
+        <a class="btn" href={site.daftarUrl} target="_blank" rel="noopener">
+          {site.ctaLabel} <Icon name="arrow" size={18} class="i-arrow" />
+        </a>
+        <button class="btn btn--ghost-light" type="button" data-share data-share-text={`Pendaftaran santri baru Pesantren Gratis Tahfidz Qur'an Yatim & Dhuafa Abu Ubaidah bin Al Jarrah ${site.tahunAjaran}`}>
+          Bagikan halaman
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .daftar__head {
+    max-width: 760px;
+  }
+
+  .daftar__window {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgb(180 65 46 / 0.08);
+    color: var(--stamp);
+    font-size: 0.9375rem;
+  }
+
+  .daftar__window strong {
+    font-weight: 700;
+  }
+
+  .daftar__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .panel {
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+
+  .panel h3 {
+    font-size: 1.5rem;
+  }
+
+  .syarat,
+  .steps {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+  }
+
+  .syarat li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 14px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .syarat__check {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: var(--gold-2);
+  }
+
+  .syarat strong,
+  .steps strong {
+    display: block;
+    font-weight: 700;
+    font-size: 1.0625rem;
+  }
+
+  .syarat span:not(.syarat__check),
+  .steps p {
+    color: var(--ink-2);
+    font-size: 0.9375rem;
+  }
+
+  .steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 14px;
+    padding-bottom: 26px;
+  }
+
+  .steps li:last-child {
+    padding-bottom: 0;
+  }
+
+  .steps li:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 44px;
+    bottom: 6px;
+    border-left: 2px dashed var(--line-strong);
+  }
+
+  .steps__no {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--gold);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+  }
+
+  .steps strong {
+    padding-top: 7px;
+  }
+
+  .steps p {
+    margin-top: 4px;
+  }
+
+  .steps a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--navy-2);
+    word-break: break-all;
+  }
+
+  .cta-band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 40px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding: clamp(28px, 4vw, 44px);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(600px 300px at 100% 0%, rgb(31 86 179 / 0.6), transparent 60%),
+      var(--navy);
+    color: #fff;
+  }
+
+  .cta-band__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.125rem);
+    line-height: 1.15;
+  }
+
+  .cta-band__text {
+    margin-top: 8px;
+    color: rgb(255 255 255 / 0.75);
+    max-width: 52ch;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 860px) {
+    .daftar__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cta-band__actions .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-share]');
+  btn?.addEventListener('click', async () => {
+    const data = {
+      title: document.title,
+      text: btn.dataset.shareText ?? '',
+      url: location.href,
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(data);
+      } else {
+        await navigator.clipboard.writeText(`${data.text}\n${data.url}`);
+        btn.textContent = 'Tautan disalin ✓';
+        setTimeout(() => (btn.textContent = 'Bagikan halaman'), 2200);
+      }
+    } catch {
+      /* dibatalkan pengguna */
+    }
+  });
+</script>

@@ -1,0 +1,259 @@
+---
+import { Image } from 'astro:assets';
+import qris from '../assets/qris.png';
+import Icon from './Icon.astro';
+import { site, WA_DONASI } from '../data/site';
+
+const kebutuhan = ['Listrik', 'Internet', 'Makan santri', 'Honor pengajar', 'Bahan ajar tahfidz', 'Kegiatan pendidikan'];
+---
+
+<section class="section donasi" id="donasi" aria-labelledby="donasi-title">
+  <div class="donasi__pattern" aria-hidden="true"></div>
+  <div class="container donasi__grid">
+    <div class="donasi__copy">
+      <p class="eyebrow eyebrow--light">Infak operasional</p>
+      <h2 class="h2" id="donasi-title">Ikut menanggung belajar mereka.</h2>
+      <p class="donasi__lead">
+        Pendidikan, tempat tinggal, dan makan santri diberikan 100% gratis. Infak Anda menjaga kebutuhan harian
+        pesantren tetap berjalan. Sekecil apa pun yang dititipkan, insyaAllah berarti bagi keberlangsungan belajar
+        mereka.
+      </p>
+
+      <ul class="needs" aria-label="Kebutuhan yang dibantu infak">
+        {kebutuhan.map((k) => <li>{k}</li>)}
+      </ul>
+
+      <div class="bank" data-reveal>
+        <div class="bank__top">
+          <span class="bank__name">{site.bank.nama}</span>
+          <span class="bank__label">Bank Syariah Indonesia</span>
+        </div>
+        <p class="bank__num" data-rek>{site.bank.rekening}</p>
+        <p class="bank__owner">a.n. {site.bank.atasNama}</p>
+        <div class="bank__actions">
+          <button type="button" class="btn btn--ink" data-copy={site.bank.rekening.replaceAll('-', '')}>
+            <Icon name="copy" size={18} /> <span data-copy-label>Salin nomor rekening</span>
+          </button>
+          <a class="btn btn--outline" href={WA_DONASI} target="_blank" rel="noopener">
+            <Icon name="chat" size={18} /> Konfirmasi via WA
+          </a>
+        </div>
+        <p class="sr-only" aria-live="polite" data-copy-status></p>
+      </div>
+    </div>
+
+    <figure class="qris" data-reveal style="--d:.1s">
+      <Image
+        src={qris}
+        alt={`QRIS Operasional Pesantren Gratis, NMID ${site.qrisNmid}`}
+        width={340}
+        densities={[1, 2]}
+        format="webp"
+        quality={92}
+      />
+      <figcaption>
+        <strong>Scan QRIS</strong> dengan aplikasi bank atau dompet digital apa pun.
+      </figcaption>
+    </figure>
+  </div>
+
+  <p class="container donasi__doa">
+    <span aria-hidden="true">✦</span>
+    Semoga Allah menerima infak kita dan menjadikannya amal jariyah.
+    <span aria-hidden="true">✦</span>
+  </p>
+</section>
+
+<style>
+  .donasi {
+    background:
+      radial-gradient(900px 500px at 0% 0%, rgb(31 86 179 / 0.45), transparent 60%),
+      var(--navy);
+    color: #fff;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .donasi__pattern {
+    position: absolute;
+    inset: 0;
+    background-image: var(--pattern-gold);
+    background-size: 56px;
+    opacity: 0.07;
+    z-index: -1;
+    mask-image: linear-gradient(90deg, transparent 30%, #000);
+    -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000);
+  }
+
+  .eyebrow--light {
+    color: var(--gold-2);
+  }
+
+  .donasi__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(40px, 7vw, 96px);
+    align-items: center;
+  }
+
+  .donasi__lead {
+    margin-top: 18px;
+    color: rgb(255 255 255 / 0.78);
+    font-size: 1.125rem;
+    max-width: 56ch;
+  }
+
+  .needs {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+
+  .needs li {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.88);
+  }
+
+  .bank {
+    margin-top: 32px;
+    padding: 26px 26px 24px;
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    color: var(--ink);
+    max-width: 520px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .bank__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bank__name {
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: #00a39d;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .bank__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--ink-3);
+  }
+
+  .bank__num {
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--navy);
+  }
+
+  .bank__owner {
+    margin-top: 4px;
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+
+  .bank__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .bank__actions .btn {
+    min-height: 48px;
+    font-size: 0.9375rem;
+    padding: 0 18px;
+  }
+
+  .qris {
+    margin: 0;
+    justify-self: center;
+    text-align: center;
+  }
+
+  .qris :global(img) {
+    width: min(340px, 100%);
+    height: auto;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+    transform: rotate(-1.5deg);
+  }
+
+  .qris figcaption {
+    margin-top: 20px;
+    font-size: 0.9375rem;
+    color: rgb(255 255 255 / 0.75);
+    max-width: 30ch;
+    margin-inline: auto;
+  }
+
+  .qris strong {
+    color: #fff;
+  }
+
+  .donasi__doa {
+    margin-top: clamp(48px, 6vw, 72px);
+    text-align: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    color: var(--gold-2);
+  }
+
+  .donasi__doa span {
+    font-style: normal;
+    opacity: 0.6;
+    margin-inline: 10px;
+    font-size: 0.8em;
+  }
+
+  @media (max-width: 900px) {
+    .donasi__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bank {
+      padding: 22px 20px;
+    }
+    .bank__actions .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const label = btn?.querySelector<HTMLElement>('[data-copy-label]');
+  const status = document.querySelector<HTMLElement>('[data-copy-status]');
+  btn?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy!);
+      if (label) label.textContent = 'Nomor rekening disalin';
+      if (status) status.textContent = 'Nomor rekening disalin ke papan klip';
+      setTimeout(() => label && (label.textContent = 'Salin nomor rekening'), 2400);
+    } catch {
+      // Fallback: pilih teks agar bisa disalin manual
+      const el = document.querySelector('[data-rek]');
+      if (el) getSelection()?.selectAllChildren(el);
+    }
+  });
+</script>

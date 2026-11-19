@@ -1,0 +1,306 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+
+const rincian = [
+  'Biaya pendidikan',
+  'Uang makan',
+  'Uang gedung',
+  'Asrama / tempat tinggal',
+  'Seragam & sepatu',
+];
+
+const nilai = [
+  {
+    icon: 'award',
+    title: 'Ijazah resmi',
+    text: 'Ijazah pemerintah setingkat SMP sekaligus ijazah pesantren.',
+  },
+  {
+    icon: 'trophy',
+    title: 'Uang saku bagi yang berprestasi',
+    text: 'Tunjangan uang saku untuk santri yang menunjukkan prestasi.',
+  },
+  {
+    icon: 'cap',
+    title: 'Pengajar lulusan UIM',
+    text: "Diajar lulusan Universitas Islam Madinah dan pesantren tahfidz Al-Qur'an.",
+  },
+  {
+    icon: 'mountain',
+    title: 'Sejuk di kaki Burangrang',
+    text: 'Lingkungan belajar yang tenang di Cisarua, Bandung Barat.',
+  },
+] as const;
+
+const facts = [
+  { big: '100%', small: 'gratis, tanpa biaya bulanan' },
+  { big: 'SMP', small: 'setingkat, mulai kelas 7' },
+  { big: '≤ 13', small: 'tahun usia maksimal' },
+  { big: 'Daring', small: 'ujian saringan masuk' },
+];
+---
+
+<div class="facts container" aria-label="Fakta singkat">
+  <ul>
+    {
+      facts.map((f, i) => (
+        <li data-reveal style={`--d:${i * 0.06}s`}>
+          <strong>{f.big}</strong>
+          <span>{f.small}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<section class="section biaya" id="biaya" aria-labelledby="biaya-title">
+  <div class="container biaya__grid">
+    <div class="receipt" data-reveal aria-label="Rincian biaya santri">
+      <p class="receipt__head">
+        <span>Rincian biaya santri</span>
+        <span>TA {site.tahunAjaran}</span>
+      </p>
+      <ul>
+        {
+          rincian.map((r) => (
+            <li>
+              <span>{r}</span>
+              <span class="receipt__dots" aria-hidden="true" />
+              <span class="receipt__val">Rp0</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="receipt__total">
+        <span>Total yang dibayar wali</span>
+        <strong>Rp0</strong>
+      </p>
+      <p class="receipt__note">
+        Seluruh kebutuhan ditanggung bersama para donatur melalui{' '}
+        <a href="#donasi">infak operasional pesantren</a>.
+      </p>
+    </div>
+
+    <div class="biaya__copy">
+      <p class="eyebrow">Biaya</p>
+      <h2 class="h2" id="biaya-title">Tidak ada tagihan. Yang ada hanya hafalan.</h2>
+      <p class="lead">
+        Banyak anak yatim dan dhuafa berhenti belajar karena biaya. Di sini, hal itu tidak perlu dipikirkan: wali
+        cukup mengantar, pesantren yang menanggung.
+      </p>
+
+      <ul class="values">
+        {
+          nilai.map((n, i) => (
+            <li data-reveal style={`--d:${i * 0.07}s`}>
+              <span class="values__icon">
+                <Icon name={n.icon} size={22} />
+              </span>
+              <div>
+                <h3>{n.title}</h3>
+                <p>{n.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .facts {
+    position: relative;
+    z-index: 2;
+    margin-top: clamp(-56px, -5vw, -32px);
+  }
+
+  .facts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+  }
+
+  .facts li {
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .facts li + li {
+    border-left: 1px solid var(--line);
+  }
+
+  .facts strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.375rem);
+    line-height: 1.1;
+    color: var(--navy-2);
+  }
+
+  .facts span {
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .biaya__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 104px);
+    align-items: start;
+  }
+
+  /* Struk */
+  .receipt {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    background: var(--card);
+    padding: 30px 28px 34px;
+    border-radius: 6px 6px 0 0;
+    box-shadow: var(--shadow);
+    font-variant-numeric: tabular-nums;
+    --zig: 12px;
+    mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--zig) 51% repeat-x,
+      linear-gradient(#000 0 0) top / 100% calc(100% - var(--zig) / 2) no-repeat;
+    -webkit-mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--zig) 51% repeat-x,
+      linear-gradient(#000 0 0) top / 100% calc(100% - var(--zig) / 2) no-repeat;
+  }
+
+  .receipt__head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .receipt ul {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+  }
+
+  .receipt li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 12px 0;
+    font-weight: 500;
+  }
+
+  .receipt__dots {
+    flex: 1;
+    border-bottom: 2px dotted var(--line-strong);
+    transform: translateY(-4px);
+  }
+
+  .receipt__val {
+    font-weight: 700;
+  }
+
+  .receipt__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 10px;
+    padding-top: 16px;
+    border-top: 2px solid var(--ink);
+    font-weight: 700;
+  }
+
+  .receipt__total strong {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--gold-deep);
+  }
+
+  .receipt__note {
+    margin-top: 18px;
+    font-size: 0.9375rem;
+    color: var(--ink-2);
+  }
+
+  .receipt__note a {
+    color: var(--navy-2);
+    font-weight: 700;
+    text-underline-offset: 3px;
+  }
+
+  .values {
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 4px;
+  }
+
+  .values li {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 18px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .values__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: var(--gold-2);
+  }
+
+  .values h3 {
+    font-size: 1.25rem;
+  }
+
+  .values p {
+    margin-top: 4px;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 900px) {
+    .biaya__grid {
+      grid-template-columns: 1fr;
+    }
+    .receipt {
+      position: relative;
+      top: 0;
+      order: 2;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .facts ul {
+      grid-template-columns: 1fr 1fr;
+    }
+    .facts li:nth-child(3) {
+      border-left: 0;
+    }
+    .facts li:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+    .facts li {
+      padding: 18px;
+    }
+  }
+</style>

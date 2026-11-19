@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+import { site, WA_TANYA } from '../data/site';
+---
+
+<div class="mcta" data-mcta aria-hidden="true">
+  <a class="btn" href={site.daftarUrl} target="_blank" rel="noopener" tabindex="-1">
+    {site.ctaLabel} <Icon name="arrow" size={18} class="i-arrow" />
+  </a>
+  <a class="btn btn--wa mcta__wa" href={WA_TANYA} target="_blank" rel="noopener" tabindex="-1" aria-label="Tanya via WhatsApp">
+    <Icon name="chat" size={22} />
+  </a>
+</div>
+
+<style>
+  .mcta {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .mcta {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      z-index: 40;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgb(255 253 248 / 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--line);
+      transform: translateY(140%);
+      transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .mcta.is-on {
+      transform: none;
+    }
+
+    .mcta .btn {
+      flex: 1;
+      min-height: 50px;
+    }
+
+    .mcta .mcta__wa {
+      flex: none;
+      width: 50px;
+      padding: 0;
+    }
+  }
+</style>
+
+<script>
+  // Muncul setelah hero terlewati, sembunyi lagi saat bagian kontak/footer terlihat
+  const bar = document.querySelector<HTMLElement>('[data-mcta]')!;
+  const hero = document.getElementById('beranda');
+  const end = document.getElementById('kontak');
+  let pastHero = false;
+  let atEnd = false;
+  const render = () => {
+    const on = pastHero && !atEnd;
+    bar.classList.toggle('is-on', on);
+    bar.setAttribute('aria-hidden', String(!on));
+    bar.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
+  };
+  if (hero) new IntersectionObserver(([e]) => ((pastHero = !e.isIntersecting), render())).observe(hero);
+  if (end) new IntersectionObserver(([e]) => ((atEnd = e.isIntersecting), render())).observe(end);
+</script>

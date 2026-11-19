@@ -1,0 +1,598 @@
+---
+import Icon from './Icon.astro';
+import { igEmbed, igUrl, site, videos } from '../data/site';
+
+const ekskul = [
+  {
+    icon: 'glove',
+    name: 'MMA',
+    text: 'Melatih disiplin, keberanian, dan ketangguhan fisik dengan pendampingan pelatih.',
+  },
+  {
+    icon: 'ball',
+    name: 'Futsal',
+    text: 'Kerja sama tim dan sportivitas, sekaligus melepas penat setelah sesi hafalan.',
+  },
+  {
+    icon: 'waves',
+    name: 'Renang',
+    text: 'Menjaga kebugaran dan melatih keterampilan hidup yang bermanfaat.',
+  },
+] as const;
+
+const tones = ['#0d2552', '#1f56b3', '#7a4a10', '#13336d'];
+---
+
+<section class="section keg" id="kegiatan" aria-labelledby="keg-title">
+  <div class="container">
+    <div class="keg__head">
+      <div>
+        <p class="eyebrow">Ekstrakurikuler</p>
+        <h2 class="h2" id="keg-title">Hafalan kuat, badan juga kuat.</h2>
+      </div>
+      <p class="lead">
+        Di sela jadwal menghafal, santri menyalurkan energi lewat olahraga. Ada yang di matras, di lapangan, dan di
+        kolam.
+      </p>
+    </div>
+
+    <ul class="ekskul">
+      {
+        ekskul.map((e, i) => (
+          <li data-reveal style={`--d:${i * 0.08}s`}>
+            <span class="ekskul__icon">
+              <Icon name={e.icon} size={30} />
+            </span>
+            <h3>{e.name}</h3>
+            <p>{e.text}</p>
+            <span class="ekskul__no" aria-hidden="true">
+              0{i + 1}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="gal" id="galeri" aria-labelledby="gal-title">
+      <div class="gal__head">
+        <div>
+          <p class="eyebrow">Galeri video</p>
+          <h3 class="gal__title" id="gal-title">Lihat langsung suasana pondok</h3>
+        </div>
+        <div class="gal__nav">
+          <button type="button" class="gal__arrow" data-gal-prev aria-label="Video sebelumnya">
+            <Icon name="arrow" size={20} class="flip" />
+          </button>
+          <button type="button" class="gal__arrow" data-gal-next aria-label="Video berikutnya">
+            <Icon name="arrow" size={20} />
+          </button>
+        </div>
+      </div>
+
+      <ul class="gal__rail" data-gal-rail>
+        {
+          videos.map((v, i) => (
+            <li>
+              <button
+                type="button"
+                class="vcard"
+                style={`--tone:${tones[i % tones.length]}`}
+                data-embed={igEmbed(v)}
+                data-url={igUrl(v)}
+                data-title={v.title}
+                aria-label={`Putar video: ${v.title}`}
+              >
+                <span class="vcard__top">
+                  <span class="vcard__tag">{v.tag}</span>
+                  <span class="vcard__kind">
+                    <Icon name="instagram" size={14} /> {v.kind === 'reel' ? 'Reel' : 'Video'}
+                  </span>
+                </span>
+                <span class="vcard__play" aria-hidden="true">
+                  <Icon name="play" size={26} />
+                </span>
+                <span class="vcard__bottom">
+                  <span class="vcard__no">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="vcard__title">{v.title}</span>
+                  <span class="vcard__desc">{v.desc}</span>
+                </span>
+              </button>
+            </li>
+          ))
+        }
+        <li>
+          <a class="vcard vcard--more" href={site.instagram.url} target="_blank" rel="noopener">
+            <Icon name="instagram" size={34} />
+            <span class="vcard__title">Video lainnya</span>
+            <span class="vcard__desc">@{site.instagram.handle}</span>
+            <span class="vcard__cta">
+              Ikuti di Instagram <Icon name="external" size={14} />
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <dialog class="modal" data-modal aria-labelledby="modal-title">
+    <div class="modal__bar">
+      <p id="modal-title" class="modal__title" data-modal-title>Video</p>
+      <a class="modal__link" data-modal-link href="#" target="_blank" rel="noopener">
+        Buka di Instagram <Icon name="external" size={14} />
+      </a>
+      <button type="button" class="modal__close" data-modal-close aria-label="Tutup video">
+        <Icon name="x" size={22} />
+      </button>
+    </div>
+    <div class="modal__frame" data-modal-frame>
+      <p class="modal__loading">Memuat video…</p>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  .keg__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px 64px;
+    align-items: end;
+  }
+
+  .ekskul {
+    list-style: none;
+    margin: clamp(40px, 5vw, 56px) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .ekskul li {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 26px 30px;
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition:
+      transform 0.25s,
+      box-shadow 0.25s;
+  }
+
+  .ekskul li:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+
+  .ekskul__icon {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: rgb(233 162 59 / 0.16);
+    color: var(--gold-deep);
+  }
+
+  .ekskul h3 {
+    margin-top: 22px;
+    font-size: 1.75rem;
+  }
+
+  .ekskul p {
+    margin-top: 6px;
+    color: var(--ink-2);
+  }
+
+  .ekskul__no {
+    position: absolute;
+    right: 18px;
+    top: 8px;
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    line-height: 1;
+    color: var(--ink);
+    opacity: 0.05;
+  }
+
+  /* Galeri */
+  .gal {
+    margin-top: clamp(64px, 8vw, 96px);
+  }
+
+  .gal__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .gal__title {
+    margin-top: 12px;
+    font-size: clamp(1.625rem, 1.2rem + 1.5vw, 2.25rem);
+  }
+
+  .gal__nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .gal__arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      opacity 0.2s;
+  }
+
+  .gal__arrow:hover:not(:disabled) {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .gal__arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .gal__arrow :global(.flip) {
+    transform: scaleX(-1);
+  }
+
+  .gal__rail {
+    list-style: none;
+    margin: 28px calc(var(--gutter) * -1) 0;
+    padding: 4px var(--gutter) 16px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, calc((100% - 3 * 16px) / 4));
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .gal__rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gal__rail li {
+    scroll-snap-align: start;
+  }
+
+  .vcard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    aspect-ratio: 9 / 14;
+    padding: 18px;
+    border: 0;
+    border-radius: var(--radius-lg);
+    color: #fff;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      linear-gradient(180deg, rgb(0 0 0 / 0) 35%, rgb(0 0 0 / 0.55)),
+      radial-gradient(120% 80% at 80% 0%, rgb(255 255 255 / 0.18), transparent 60%),
+      var(--tone);
+    transition:
+      transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+      box-shadow 0.3s;
+  }
+
+  .vcard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--pattern-gold);
+    background-size: 44px;
+    opacity: 0.16;
+    z-index: -1;
+    transition: transform 0.6s ease;
+  }
+
+  .vcard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .vcard:hover::before {
+    transform: scale(1.08) rotate(2deg);
+  }
+
+  .vcard__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vcard__tag {
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.16);
+    backdrop-filter: blur(6px);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .vcard__kind {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .vcard__play {
+    align-self: center;
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--ink);
+    padding-left: 4px;
+    box-shadow: 0 0 0 10px rgb(233 162 59 / 0.22);
+    transition: transform 0.25s;
+  }
+
+  .vcard:hover .vcard__play {
+    transform: scale(1.08);
+  }
+
+  .vcard__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .vcard__no {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    color: var(--gold-2);
+  }
+
+  .vcard__title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    line-height: 1.15;
+  }
+
+  .vcard__desc {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  .vcard--more {
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--card);
+    color: var(--ink);
+    border: 1.5px dashed var(--line-strong);
+  }
+
+  .vcard--more::before {
+    display: none;
+  }
+
+  .vcard--more .vcard__desc {
+    color: var(--ink-2);
+  }
+
+  .vcard__cta {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--navy-2);
+  }
+
+  /* Modal video */
+  .modal {
+    width: min(480px, calc(100vw - 24px));
+    max-height: calc(100dvh - 24px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .modal[open] {
+    display: flex;
+    flex-direction: column;
+    animation: pop 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .modal::backdrop {
+    background: rgb(8 20 46 / 0.78);
+    backdrop-filter: blur(4px);
+  }
+
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+  }
+
+  .modal__bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 10px 10px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .modal__title {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--navy-2);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .modal__close {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    flex: none;
+  }
+
+  .modal__close:hover {
+    background: var(--paper-2);
+  }
+
+  .modal__frame {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    background: #fff;
+  }
+
+  .modal__frame :global(iframe) {
+    width: 100%;
+    height: min(820px, calc(100dvh - 100px));
+    border: 0;
+  }
+
+  .modal__loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--ink-3);
+    font-size: 0.9375rem;
+    z-index: 0;
+  }
+
+  .modal__frame :global(iframe) {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+  }
+
+  @media (max-width: 900px) {
+    .keg__head {
+      grid-template-columns: 1fr;
+    }
+    .ekskul {
+      grid-template-columns: 1fr;
+    }
+    .ekskul li {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      column-gap: 18px;
+      align-items: center;
+    }
+    .ekskul h3 {
+      margin-top: 0;
+    }
+    .ekskul p {
+      grid-column: 1 / -1;
+      margin-top: 14px;
+    }
+    .gal__rail {
+      grid-auto-columns: minmax(220px, 62%);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .gal__nav {
+      display: none;
+    }
+    .gal__rail {
+      grid-auto-columns: 74%;
+    }
+  }
+</style>
+
+<script>
+  // Galeri: tombol geser
+  const rail = document.querySelector<HTMLElement>('[data-gal-rail]')!;
+  const prev = document.querySelector<HTMLButtonElement>('[data-gal-prev]')!;
+  const next = document.querySelector<HTMLButtonElement>('[data-gal-next]')!;
+  const step = () => (rail.querySelector('li')?.getBoundingClientRect().width ?? 260) + 16;
+  const update = () => {
+    prev.disabled = rail.scrollLeft < 8;
+    next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8;
+  };
+  prev.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+  rail.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  // Modal: embed Instagram baru dimuat saat diklik (hemat kuota & lebih cepat)
+  const modal = document.querySelector<HTMLDialogElement>('[data-modal]')!;
+  const frame = modal.querySelector<HTMLElement>('[data-modal-frame]')!;
+  const titleEl = modal.querySelector<HTMLElement>('[data-modal-title]')!;
+  const linkEl = modal.querySelector<HTMLAnchorElement>('[data-modal-link]')!;
+  let opener: HTMLElement | null = null;
+
+  document.querySelectorAll<HTMLButtonElement>('[data-embed]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      opener = btn;
+      titleEl.textContent = btn.dataset.title ?? 'Video';
+      linkEl.href = btn.dataset.url ?? '#';
+      frame.querySelector('iframe')?.remove();
+      const iframe = document.createElement('iframe');
+      iframe.src = btn.dataset.embed!;
+      iframe.title = `Video Instagram: ${btn.dataset.title}`;
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; clipboard-write';
+      iframe.setAttribute('allowfullscreen', '');
+      frame.append(iframe);
+      modal.showModal();
+    });
+  });
+
+  const close = () => modal.close();
+  modal.querySelector('[data-modal-close]')!.addEventListener('click', close);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+  modal.addEventListener('close', () => {
+    frame.querySelector('iframe')?.remove(); // hentikan pemutaran
+    opener?.focus();
+  });
+</script>

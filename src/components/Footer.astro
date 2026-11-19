@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-shield.png';
+import Icon from './Icon.astro';
+import { nav, site, WA_TANYA } from '../data/site';
+---
+
+<footer class="foot">
+  <div class="container foot__grid">
+    <div class="foot__brand">
+      <span class="foot__logo">
+        <Image src={logo} alt="" width={56} densities={[1, 2]} />
+      </span>
+      <p class="foot__name">{site.name}</p>
+      <p class="arabic foot__ar" lang="ar">{site.arabic}</p>
+    </div>
+
+    <nav aria-label="Navigasi footer">
+      <p class="foot__h">Halaman</p>
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href="#faq">Tanya jawab</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <p class="foot__h">Hubungi</p>
+      <ul>
+        <li><a href={WA_TANYA} target="_blank" rel="noopener">WA {site.wa.display}</a></li>
+        <li><a href={site.instagram.url} target="_blank" rel="noopener">@{site.instagram.handle}</a></li>
+        <li><a href={site.lokasiUrl} target="_blank" rel="noopener">Petunjuk arah</a></li>
+        <li><a href={site.daftarUrl} target="_blank" rel="noopener">Formulir pendaftaran</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container foot__bottom">
+    <p>© 2026 Pesantren Gratis Abu Ubaidah bin Al Jarrah · Member of Yusuf Abu Ubaidah (YAU)</p>
+    <a href="#beranda" class="foot__top">
+      Kembali ke atas <Icon name="arrow" size={16} class="up" />
+    </a>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    background: #081a3d;
+    color: rgb(255 255 255 / 0.78);
+    padding: clamp(56px, 7vw, 88px) 0 calc(28px + env(safe-area-inset-bottom));
+  }
+
+  .foot__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 40px;
+  }
+
+  .foot__logo {
+    display: inline-grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    background: #fff;
+    border-radius: 16px;
+  }
+
+  .foot__logo :global(img) {
+    width: 56px;
+    height: auto;
+  }
+
+  .foot__name {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: #fff;
+    max-width: 30ch;
+  }
+
+  .foot__ar {
+    margin-top: 6px;
+    font-size: 1.5rem;
+    color: var(--gold-2);
+    text-align: left;
+    direction: rtl;
+    display: inline-block;
+  }
+
+  .foot__h {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-2);
+  }
+
+  .foot ul {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .foot ul a {
+    display: inline-block;
+    padding: 6px 0;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .foot a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .foot__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.875rem;
+  }
+
+  .foot__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .foot__top :global(.up) {
+    transform: rotate(-90deg);
+  }
+
+  @media (max-width: 760px) {
+    .foot__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .foot__brand {
+      grid-column: 1 / -1;
+    }
+    .foot {
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
+    }
+  }
+</style>
